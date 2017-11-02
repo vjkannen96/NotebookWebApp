@@ -1,0 +1,31 @@
+<h1><u>Notes</u></h1>
+{% if latest_notes_list %}
+<style>
+table, th {
+    border: 1px solid black;
+}
+</style>
+
+  <ul>
+    <table>
+    {% for note in latest_notes_list %}
+          <tr>
+          <th><a href="{% url 'notebooks:detail' note.id %}">{{note.note_title}}</a></th>
+          <th><p>{{note.pub_date}}</p></th>
+          <th><a href="{% url 'notebooks:edit' note.id %}"><button type="button">Edit</button></a></th>
+          <th><form action ="{% url 'notebooks:delete' note.id %}" method ="post">
+           {% csrf_token %}
+           <button type ="submit">Delete</button></a>
+          </form></th>
+          </tr>
+
+        {% endfor %}
+      </table>
+  </ul>
+{% else %}
+ <p>No notes are available<p>
+{% endif %}
+
+
+<a href="{% url 'notebooks:create'%}"><button type="button">Create</button></a>
+<a href="{% url 'logout' %}"><button type="button">logout</button></a>
